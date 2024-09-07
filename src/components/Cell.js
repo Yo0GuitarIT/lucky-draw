@@ -1,11 +1,11 @@
-const Cell = ({ cellNumber }) => {
+const Cell = ({ cellNumber, handleChangePlayer }) => {
   return (
     <div
       style={{
         backgroundColor: "lightgrey",
       }}
     >
-      <p>{cellNumber}</p>
+      <button onClick={handleChangePlayer}>{cellNumber}</button>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import LuckyDraw from "./LuckyDraw";
+import LuckyDraw from "./components/LuckyDraw";
 
 function App() {
   return <LuckyDraw />;

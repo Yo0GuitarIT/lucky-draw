@@ -15,7 +15,7 @@ const PrizeStatus = () => {
     >
       {prizes.map((prize, index) => (
         <div key={index} style={{ backgroundColor: "lightpink" }}>
-          <p>prize: {prize}</p>
+          <p>prize: prize</p>
           <p>winner is player 1</p>
         </div>
       ))}

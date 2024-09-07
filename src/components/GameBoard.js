@@ -5,7 +5,7 @@ for (let i = 0; i < 36; i++) {
   cells.push(i);
 }
 
-const GameBoard = () => {
+const GameBoard = ({ handleChangePlayer}) => {
   return (
     <div
       style={{
@@ -15,7 +15,7 @@ const GameBoard = () => {
       }}
     >
       {cells.map((cell) => (
-        <Cell key={cell} cellNumber={cell} />
+        <Cell key={cell} cellNumber={cell} handleChangePlayer={handleChangePlayer}/>
       ))}
     </div>
   );

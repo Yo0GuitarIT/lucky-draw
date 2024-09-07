@@ -1,7 +1,7 @@
-const CurrentTurn = () => {
+const CurrentTurn = ({ currentPlayer }) => {
   return (
     <div style={{ backgroundColor: "lightseagreen" }}>
-      <p>Current Turn: Player 1</p>
+      <p>Current Turn: Player {currentPlayer}</p>
     </div>
   );
 };
