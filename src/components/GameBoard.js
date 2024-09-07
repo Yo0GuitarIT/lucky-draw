@@ -1,11 +1,6 @@
 import Cell from "./Cell";
 
-const cells = [];
-for (let i = 0; i < 36; i++) {
-  cells.push(i);
-}
-
-const GameBoard = ({ handleChangePlayer}) => {
+const GameBoard = ({ cellsState, handleChangePlayer }) => {
   return (
     <div
       style={{
@@ -14,8 +9,15 @@ const GameBoard = ({ handleChangePlayer}) => {
         gap: "10px",
       }}
     >
-      {cells.map((cell) => (
-        <Cell key={cell} cellNumber={cell} handleChangePlayer={handleChangePlayer}/>
+      {cellsState.map((cellState,index) => (
+       
+        <Cell
+          key={index}
+          index = {index}
+          cellState={cellState}
+          handleChangePlayer={handleChangePlayer}
+
+        />
       ))}
     </div>
   );
