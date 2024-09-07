@@ -3,8 +3,7 @@ for (let i = 0; i < 3; i++) {
   prizes.push(i + 1);
 }
 
-const PrizeStatus = () => {
-  console.log("prize status refresh");
+const PrizeStatus = ({ winners = [] }) => {
   return (
     <div
       style={{
@@ -13,10 +12,9 @@ const PrizeStatus = () => {
         gap: "10px",
       }}
     >
-      {prizes.map((prize, index) => (
+      {winners.map((winner, index) => (
         <div key={index} style={{ backgroundColor: "lightpink" }}>
-          <p style={{margin: "5px" }}>prize: prize</p>
-          <p style={{margin: "5px" }}>winner is player 1</p>
+          Prize {index + 1}: {winner ? `Player ${winner}` : "Not yet won"}
         </div>
       ))}
     </div>
