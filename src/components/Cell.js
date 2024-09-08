@@ -4,15 +4,9 @@ const Cell = ({ index, cellState, handleChangePlayer }) => {
   };
 
   return (
-    <div
-      style={{
-        height: "auto",
-        backgroundColor: "lightgrey",
-      }}
-    >
-      <p style={{ margin: "5px" }}>{cellState ? "✅" : "❌"}</p>
+    <div>
       <button disabled={cellState} onClick={handleClick}>
-        ???
+        {cellState ? "✅" : "❌"}
       </button>
     </div>
   );

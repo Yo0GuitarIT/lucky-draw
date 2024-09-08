@@ -1,85 +1,52 @@
 import { useEffect, useState } from "react";
 import CurrentTurn from "./CurrentTurn";
 import GameBoard from "./GameBoard";
-import PLayerStatus from "./PlayerStatue";
+import PlayerStatus from "./PlayerStatus";
 import PrizeStatus from "./PrizeStatus";
 import ResetButton from "./ResetButton";
 
 const LuckyDraw = () => {
-  const [isPlaying, setIsPlaying] = useState(true);
+  // 紀錄格子狀態 
   const [cellsState, setCellState] = useState(Array(36).fill(false));
+  // 當前抽獎的玩家
   const [currentPlayer, setCurrentPlayer] = useState(1);
-
-  /**
-   * true => 遊戲中
-   * false => 中獎退出遊戲
-   */
-  const [playerState, setPlayerState] = useState(Array(6).fill(true));
-
-  // 紀錄得獎玩家
-  const [winners, setWinners] = useState(Array(3).fill(null));
-
-  // 紀錄有獎的位置
-  const [prize, setPrize] = useState(Array(3));
+  // 
+  const [winners, setWinners] = useState([]);
+  const [prize, setPrize] = useState([]);
+  const [isGameOver, setIsGameOver] = useState(false);
 
   const handleCellClick = (index) => {
-    if (!isPlaying) return;
+    if (isGameOver || cellsState[index]) return;
 
     setCellState((prevState) => {
       const newState = [...prevState];
-      newState[index] = !newState[index];
+      newState[index] = true;
       return newState;
     });
 
-    // 中獎情況
     if (prize.includes(index)) {
       handleWinner(currentPlayer);
+      setCurrentPlayer((current) => (current % 6) + 1);
     } else {
-      setCurrentPlayer(findNextPlayer(currentPlayer));
+      setCurrentPlayer((current) => (current % 6) + 1);
     }
   };
 
   const handleWinner = (winnerPlayer) => {
-    console.log(`winner is player ${winnerPlayer}`);
-    setPlayerState((prevState) => {
-      const newState = [...prevState];
-      newState[winnerPlayer - 1] = false;
-      return newState;
-    });
-
     setWinners((prevWinners) => {
-      const newWinners = [...prevWinners];
-      const emptyIndex = newWinners.findIndex((w) => w === null);
-      if (emptyIndex !== -1) {
-        newWinners[emptyIndex] = winnerPlayer;
+      const newWinners = [...prevWinners, winnerPlayer];
+      if (newWinners.length === 3) {
+        setIsGameOver(true);
       }
       return newWinners;
     });
-
-    checkGameEnd();
-  };
-
-  const findNextPlayer = (currentPlayer) => {
-    let nextPlayer = currentPlayer;
-    do {
-      nextPlayer = (nextPlayer % 6) + 1;
-    } while (!playerState[nextPlayer - 1] && nextPlayer !== currentPlayer);
-    return nextPlayer;
-  };
-
-  const checkGameEnd = () => {
-    if (winners.every((w) => w !== null) || playerState.every((p) => !p)) {
-      setIsPlaying(false);
-      console.log("Game Over!");
-    }
   };
 
   const handleReset = () => {
-    setIsPlaying(true);
-    setCurrentPlayer(1);
     setCellState(Array(36).fill(false));
-    setPlayerState(Array(6).fill(true));
-    setWinners(Array(3).fill(null));
+    setCurrentPlayer(1);
+    setWinners([]);
+    setIsGameOver(false);
     assignPrizes();
   };
 
@@ -91,33 +58,23 @@ const LuckyDraw = () => {
         newPrize.push(randomPosition);
       }
     }
-    console.log(newPrize);
     setPrize(newPrize);
+    console.log(newPrize);
   };
 
   useEffect(() => {
     assignPrizes();
-    setWinners(Array(3).fill(null));
-  }, []); // 空依賴數組，只在組件掛載時運行
-
-  useEffect(() => {
-    if (!isPlaying) {
-      console.log(
-        "Game has ended. Winners:",
-        winners.filter((w) => w !== null)
-      );
-    }
-  }, [isPlaying, winners]);
+  }, []);
 
   return (
     <div style={{ textAlign: "center" }}>
       <h2>Lucky draw</h2>
-
       <CurrentTurn currentPlayer={currentPlayer} />
       <GameBoard cellsState={cellsState} handleChangePlayer={handleCellClick} />
-      <PLayerStatus />
-      <PrizeStatus winners={winners || []} />
+      <PlayerStatus />
+      <PrizeStatus winners={winners} />
       <ResetButton handleReset={handleReset} />
+      {isGameOver ? <div>Game Over!</div> : <div>Game Start!</div>}
     </div>
   );
 };

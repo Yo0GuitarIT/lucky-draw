@@ -1,8 +1,3 @@
-const prizes = [];
-for (let i = 0; i < 3; i++) {
-  prizes.push(i + 1);
-}
-
 const PrizeStatus = ({ winners = [] }) => {
   return (
     <div
