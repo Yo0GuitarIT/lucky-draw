@@ -21,12 +21,6 @@ Lucky Draw is an interactive web-based game built with React. It simulates a luc
 - Winner announcement
 - Game reset functionality
 
-## Technical Stack
-
-- React.js
-- Create React App
-- CSS for styling
-
 ## How to Play
 
 1. Start the game by clicking the "Start Game" button.
@@ -34,7 +28,3 @@ Lucky Draw is an interactive web-based game built with React. It simulates a luc
 3. If a prize is found, the current player wins and is removed from the game.
 4. The game ends when all three prizes are discovered.
 5. Use the reset button to start a new game at any time.
-
-## Installation and Setup
-
-1. Clone the repository:
