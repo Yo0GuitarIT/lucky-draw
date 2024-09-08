@@ -6,17 +6,15 @@ import PrizeStatus from "./PrizeStatus";
 import ResetButton from "./ResetButton";
 
 const LuckyDraw = () => {
-  // 紀錄格子狀態 
   const [cellsState, setCellState] = useState(Array(36).fill(false));
-  // 當前抽獎的玩家
+  const [playerState, setPlayerState] = useState(Array(6).fill(true));
   const [currentPlayer, setCurrentPlayer] = useState(1);
-  // 
   const [winners, setWinners] = useState([]);
   const [prize, setPrize] = useState([]);
   const [isGameOver, setIsGameOver] = useState(false);
 
   const handleCellClick = (index) => {
-    if (isGameOver || cellsState[index]) return;
+    if (isGameOver) return;
 
     setCellState((prevState) => {
       const newState = [...prevState];
@@ -26,15 +24,19 @@ const LuckyDraw = () => {
 
     if (prize.includes(index)) {
       handleWinner(currentPlayer);
-      setCurrentPlayer((current) => (current % 6) + 1);
-    } else {
-      setCurrentPlayer((current) => (current % 6) + 1);
     }
+    setCurrentPlayer(findNextPlayer(currentPlayer));
   };
 
   const handleWinner = (winnerPlayer) => {
-    setWinners((prevWinners) => {
-      const newWinners = [...prevWinners, winnerPlayer];
+    setPlayerState((prevState) => {
+      const newState = [...prevState];
+      newState[winnerPlayer - 1] = false;
+      return newState;
+    });
+
+    setWinners((prevWinner) => {
+      const newWinners = [...prevWinner, winnerPlayer];
       if (newWinners.length === 3) {
         setIsGameOver(true);
       }
@@ -42,8 +44,17 @@ const LuckyDraw = () => {
     });
   };
 
+  const findNextPlayer = (currentPlayer) => {
+    let nextPlayer = currentPlayer;
+    do {
+      nextPlayer = (nextPlayer % 6) + 1;
+    } while (!playerState[nextPlayer - 1] && nextPlayer !== currentPlayer);
+    return nextPlayer;
+  };
+
   const handleReset = () => {
     setCellState(Array(36).fill(false));
+    setPlayerState(Array(6).fill(true));
     setCurrentPlayer(1);
     setWinners([]);
     setIsGameOver(false);
