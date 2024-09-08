@@ -7,7 +7,7 @@ import ResetButton from "./ResetButton";
 
 const LuckyDraw = () => {
   const [cellsState, setCellState] = useState(Array(36).fill(false));
-  const [playerState, setPlayerState] = useState(Array(6).fill(true));
+  const [playersState, setPlayersState] = useState(Array(6).fill(true));
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [winners, setWinners] = useState([]);
   const [prize, setPrize] = useState([]);
@@ -29,7 +29,7 @@ const LuckyDraw = () => {
   };
 
   const handleWinner = (winnerPlayer) => {
-    setPlayerState((prevState) => {
+    setPlayersState((prevState) => {
       const newState = [...prevState];
       newState[winnerPlayer - 1] = false;
       return newState;
@@ -48,13 +48,13 @@ const LuckyDraw = () => {
     let nextPlayer = currentPlayer;
     do {
       nextPlayer = (nextPlayer % 6) + 1;
-    } while (!playerState[nextPlayer - 1] && nextPlayer !== currentPlayer);
+    } while (!playersState[nextPlayer - 1] && nextPlayer !== currentPlayer);
     return nextPlayer;
   };
 
   const handleReset = () => {
     setCellState(Array(36).fill(false));
-    setPlayerState(Array(6).fill(true));
+    setPlayersState(Array(6).fill(true));
     setCurrentPlayer(1);
     setWinners([]);
     setIsGameOver(false);
@@ -82,7 +82,7 @@ const LuckyDraw = () => {
       <h2>Lucky draw</h2>
       <CurrentTurn currentPlayer={currentPlayer} />
       <GameBoard cellsState={cellsState} handleChangePlayer={handleCellClick} />
-      <PlayerStatus />
+      <PlayerStatus playersState={playersState}  currentPlayer={currentPlayer}/>
       <PrizeStatus winners={winners} />
       <ResetButton handleReset={handleReset} />
       {isGameOver ? <div>Game Over!</div> : <div>Game Start!</div>}

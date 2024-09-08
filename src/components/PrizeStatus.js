@@ -1,4 +1,4 @@
-const PrizeStatus = ({ winners = [] }) => {
+const PrizeStatus = ({ winners }) => {
   return (
     <div
       style={{
@@ -7,9 +7,10 @@ const PrizeStatus = ({ winners = [] }) => {
         gap: "10px",
       }}
     >
-      {winners.map((winner, index) => (
+      {[0,1,2].map((index) => (
         <div key={index} style={{ backgroundColor: "lightpink" }}>
-          Prize {index + 1}: {winner ? `Player ${winner}` : "Not yet won"}
+          Prize {index + 1}:{" "}
+          {winners[index] ? `Player ${winners[index]}` : "Not yet won"}
         </div>
       ))}
     </div>

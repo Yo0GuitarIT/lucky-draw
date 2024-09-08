@@ -1,8 +1,4 @@
-const players = [];
-for (let i = 0; i < 6; i++) {
-  players.push(i + 1);
-}
-const PLayerStatus = () => {
+const PLayerStatus = ({ playersState, currentPlayer }) => {
   return (
     <div
       style={{
@@ -12,9 +8,16 @@ const PLayerStatus = () => {
         margin: "10px 0 10px 0",
       }}
     >
-      {players.map((player, index) => (
-        <div key={index} style={{ backgroundColor: "lightblue" }}>
-          <p>player: {player}</p>
+      {playersState.map((playerState, index) => (
+        <div
+          key={index}
+          style={{
+            backgroundColor: playerState ? "lightblue" : "grey",
+            border: currentPlayer === index + 1 ? "2px solid red" : null,
+          }}
+        >
+          <p>player: {index + 1}</p>
+          <p>{playerState ? null : "won"}</p>
         </div>
       ))}
     </div>
