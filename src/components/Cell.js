@@ -1,12 +1,13 @@
-const Cell = ({ index, cellState, handleChangePlayer }) => {
+const Cell = ({ index, isSelect, handleCellClick, winningCells }) => {
   const handleClick = () => {
-    handleChangePlayer(index);
+    handleCellClick(index);
+    console.log(winningCells);
   };
 
   return (
     <div>
-      <button disabled={cellState} onClick={handleClick}>
-        {cellState ? "✅" : "❌"}
+      <button disabled={isSelect} onClick={handleClick}>
+        {isSelect ? (winningCells.includes(index) ? "🉐" : "🈚") : "❓"}
       </button>
     </div>
   );

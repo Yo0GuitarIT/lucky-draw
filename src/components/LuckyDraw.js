@@ -6,30 +6,30 @@ import PrizeStatus from "./PrizeStatus";
 import ResetButton from "./ResetButton";
 
 const LuckyDraw = () => {
-  const [cellsState, setCellState] = useState(Array(36).fill(false));
-  const [playersState, setPlayersState] = useState(Array(6).fill(true));
+  const [cellsSelected, setCellsSelected] = useState(Array(36).fill(false));
+  const [activePlayers, setActivePlayers] = useState(Array(6).fill(true));
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [winners, setWinners] = useState([]);
-  const [prize, setPrize] = useState([]);
+  const [winningCells, setWinningCells] = useState([]);
   const [isGameOver, setIsGameOver] = useState(false);
 
   const handleCellClick = (index) => {
     if (isGameOver) return;
 
-    setCellState((prevState) => {
+    setCellsSelected((prevState) => {
       const newState = [...prevState];
       newState[index] = true;
       return newState;
     });
 
-    if (prize.includes(index)) {
+    if (winningCells.includes(index)) {
       handleWinner(currentPlayer);
     }
     setCurrentPlayer(findNextPlayer(currentPlayer));
   };
 
   const handleWinner = (winnerPlayer) => {
-    setPlayersState((prevState) => {
+    setActivePlayers((prevState) => {
       const newState = [...prevState];
       newState[winnerPlayer - 1] = false;
       return newState;
@@ -48,13 +48,13 @@ const LuckyDraw = () => {
     let nextPlayer = currentPlayer;
     do {
       nextPlayer = (nextPlayer % 6) + 1;
-    } while (!playersState[nextPlayer - 1] && nextPlayer !== currentPlayer);
+    } while (!activePlayers[nextPlayer - 1] && nextPlayer !== currentPlayer);
     return nextPlayer;
   };
 
   const handleReset = () => {
-    setCellState(Array(36).fill(false));
-    setPlayersState(Array(6).fill(true));
+    setCellsSelected(Array(36).fill(false));
+    setActivePlayers(Array(6).fill(true));
     setCurrentPlayer(1);
     setWinners([]);
     setIsGameOver(false);
@@ -69,8 +69,7 @@ const LuckyDraw = () => {
         newPrize.push(randomPosition);
       }
     }
-    setPrize(newPrize);
-    console.log(newPrize);
+    setWinningCells(newPrize);
   };
 
   useEffect(() => {
@@ -81,11 +80,20 @@ const LuckyDraw = () => {
     <div style={{ textAlign: "center" }}>
       <h2>Lucky draw</h2>
       <CurrentTurn currentPlayer={currentPlayer} />
-      <GameBoard cellsState={cellsState} handleChangePlayer={handleCellClick} />
-      <PlayerStatus playersState={playersState}  currentPlayer={currentPlayer}/>
+      <GameBoard
+        cellsSelected={cellsSelected}
+        handleCellClick={handleCellClick}
+        winningCells={winningCells}
+      />
+      <PlayerStatus
+        activePlayers={activePlayers}
+        currentPlayer={currentPlayer}
+      />
       <PrizeStatus winners={winners} />
       <ResetButton handleReset={handleReset} />
-      {isGameOver ? <div>Game Over!</div> : <div>Game Start!</div>}
+      <div style={{ color: "brown" }}>
+        {isGameOver ? <h2>Game Over!</h2> : <h2>Game Start!</h2>}
+      </div>
     </div>
   );
 };

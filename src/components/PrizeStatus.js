@@ -7,12 +7,14 @@ const PrizeStatus = ({ winners }) => {
         gap: "10px",
       }}
     >
-      {[0,1,2].map((index) => (
-        <div key={index} style={{ backgroundColor: "lightpink" }}>
-          Prize {index + 1}:{" "}
-          {winners[index] ? `Player ${winners[index]}` : "Not yet won"}
-        </div>
-      ))}
+      {Array(3)
+        .fill()
+        .map((_, index) => (
+          <div key={index} style={{ backgroundColor: "lightpink" }}>
+            Prize {index + 1} :
+            {winners[index] ? ` Player ${winners[index]}` : " Not yet won"}
+          </div>
+        ))}
     </div>
   );
 };

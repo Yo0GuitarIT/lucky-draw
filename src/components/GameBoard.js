@@ -1,6 +1,6 @@
 import Cell from "./Cell";
 
-const GameBoard = ({ cellsState, handleChangePlayer }) => {
+const GameBoard = ({ cellsSelected,  handleCellClick,winningCells }) => {
   return (
     <div
       style={{
@@ -9,14 +9,13 @@ const GameBoard = ({ cellsState, handleChangePlayer }) => {
         gap: "10px",
       }}
     >
-      {cellsState.map((cellState,index) => (
-       
+      {cellsSelected.map((isSelect, index) => (
         <Cell
           key={index}
-          index = {index}
-          cellState={cellState}
-          handleChangePlayer={handleChangePlayer}
-
+          index={index}
+          isSelect={isSelect}
+          handleCellClick={handleCellClick}
+          winningCells = {winningCells}
         />
       ))}
     </div>

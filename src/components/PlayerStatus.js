@@ -1,4 +1,4 @@
-const PLayerStatus = ({ playersState, currentPlayer }) => {
+const PLayerStatus = ({ activePlayers, currentPlayer }) => {
   return (
     <div
       style={{
@@ -8,7 +8,7 @@ const PLayerStatus = ({ playersState, currentPlayer }) => {
         margin: "10px 0 10px 0",
       }}
     >
-      {playersState.map((playerState, index) => (
+      {activePlayers.map((playerState, index) => (
         <div
           key={index}
           style={{
@@ -16,7 +16,7 @@ const PLayerStatus = ({ playersState, currentPlayer }) => {
             border: currentPlayer === index + 1 ? "2px solid red" : null,
           }}
         >
-          <p>player: {index + 1}</p>
+          <p>Player {index + 1}</p>
           <p>{playerState ? null : "won"}</p>
         </div>
       ))}
