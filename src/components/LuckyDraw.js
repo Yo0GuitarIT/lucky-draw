@@ -8,11 +8,7 @@ const LuckyDraw = () => {
   const [cellsSelected, setCellsSelected] = useState(Array(36).fill(false));
   // 紀錄還在遊戲中的玩家
   const [activePlayers, setActivePlayers] = useState(Array(6).fill(true));
-  /** 用戶體驗：玩家通常認為第一個玩家是"玩家1"而不是"玩家0"。
-   * 直觀性：在遊戲邏輯和UI中使用1-6的玩家編號更直觀。
-   * 錯誤預防：雖然需要在訪問數組時減1，但這可以通過一致的編碼習慣來管理。相比之下，在UI層總是記得將0-based索引加1更容易出錯。
-   * 擴展性：如果將來需要添加基於玩家編號的功能，從1開始更自然。
-   */
+  // 紀錄當前玩家 (1-6)
   const [currentPlayer, setCurrentPlayer] = useState(1);
   // 紀錄獲勝玩家
   const [winners, setWinners] = useState([]);
