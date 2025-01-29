@@ -27,28 +27,34 @@ const initialState = {
  * @return {*} state
  */
 const reducer = (state, action) => {
-    switch (action.type) {
+    const { type, index } = action;
+    const { gamePhase, winners, currentPlayer, activePlayers, cellsSelected } =
+        state;
+
+    switch (type) {
         // 點擊格子
         case "CELL_CLICK":
             // 如果不是遊戲進行中，則不處理
-            if (state.gamePhase !== "playing") return state;
+            if (gamePhase !== "playing") return state;
 
             // 複製已選中格子
-            const newCellsSelected = [...state.cellsSelected];
-            newCellsSelected[action.index] = true;
+            const newCellsSelected = [...cellsSelected];
+            newCellsSelected[index] = true;
 
             // 取得新的玩家狀態
-            let newActivePlayers = [...state.activePlayers];
+            let newActivePlayers = [...activePlayers];
             // 取得新的得獎者
-            let newWinners = [...state.winners];
+            let newWinners = [...winners];
             // 取得新的遊戲階段
             let newGamePhase = state.gamePhase;
 
-            if (state.winningCells.includes(action.index)) {
-                // 如果選中的格子是得獎格子 則將玩家狀態設為 false
-                newActivePlayers[state.currentPlayer - 1] = false
+            // 如果選中的格子是得獎格子
+            if (state.winningCells.includes(index)) {
+                // 將玩家狀態設為 false
+                newActivePlayers[state.currentPlayer - 1] = false;
                 // 將得獎者加入 winners
-                newWinners = [...state.winners, state.currentPlayer];
+                newWinners = [...winners, currentPlayer];
+
                 // 如果得獎者有 3 位，則遊戲結束
                 if (newWinners.length === 3) {
                     newGamePhase = "over";
