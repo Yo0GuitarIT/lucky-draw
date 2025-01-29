@@ -4,26 +4,16 @@ import PlayerStatus from "./PlayerStatus";
 import PrizeStatus from "./PrizeStatus";
 import ResetButton from "./ResetButton";
 
-const GameScreen = ({
-  currentPlayer,
-  cellsSelected,
-  handleCellClick,
-  winningCells,
-  activePlayers,
-  winners,
-  handleReset,
-}) => (
-  <>
-    <CurrentTurn currentPlayer={currentPlayer} />
-    <GameBoard
-      cellsSelected={cellsSelected}
-      handleCellClick={handleCellClick}
-      winningCells={winningCells}
-    />
-    <PlayerStatus activePlayers={activePlayers} currentPlayer={currentPlayer} />
-    <PrizeStatus winners={winners} />
-    <ResetButton handleReset={handleReset} />
-  </>
-);
+const GameScreen = () => {
+    return (
+        <>
+            <CurrentTurn />
+            <GameBoard />
+            <PlayerStatus />
+            <PrizeStatus />
+            <ResetButton />
+        </>
+    );
+};
 
 export default GameScreen;
