@@ -1,12 +1,15 @@
+import { Flex, Text } from "@radix-ui/themes";
 import PrizeStatus from "./PrizeStatus";
 import ResetButton from "./ResetButton";
+import Title from "./Title";
 
 const GameOverScreen = () => (
-    <div>
-        <h3>Game Over!</h3>
+    <Flex direction="column" align="center">
+        <Title/>
+        <Text size='8'>Game Over!</Text>
         <PrizeStatus />
         <ResetButton />
-    </div>
+    </Flex>
 );
 
 export default GameOverScreen;

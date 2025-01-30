@@ -1,26 +1,17 @@
 import Cell from "./Cell";
 import { useLuckyDraw } from "../context/LuckyDrawContext";
+import { Box, Grid } from "@radix-ui/themes";
 
 const GameBoard = () => {
-    const { handleCellClick, winningCells, cellsSelected } = useLuckyDraw();
+    const { cellsSelected } = useLuckyDraw();
     return (
-        <div
-            style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(6, 1fr)",
-                gap: "10px",
-            }}
-        >
-            {cellsSelected.map((isSelect, index) => (
-                <Cell
-                    key={index}
-                    index={index}
-                    isSelect={isSelect}
-                    handleCellClick={handleCellClick}
-                    winningCells={winningCells}
-                />
-            ))}
-        </div>
+        <Box>
+            <Grid columns="6" rows="6" gap="4">
+                {cellsSelected.map((isSelect, index) => (
+                    <Cell key={index} index={index} isSelect={isSelect} />
+                ))}
+            </Grid>
+        </Box>
     );
 };
 

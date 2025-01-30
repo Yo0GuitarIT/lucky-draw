@@ -1,15 +1,23 @@
-const Cell = ({ index, isSelect, handleCellClick, winningCells }) => {
+import { IconButton } from "@radix-ui/themes";
+import { useLuckyDraw } from "../context/LuckyDrawContext";
+
+const Cell = ({ index, isSelect }) => {
+    const { handleCellClick, winningCells } = useLuckyDraw();
+    
     const handleClick = () => {
         handleCellClick(index);
-        console.log(winningCells);
     };
 
     return (
-        <div>
-            <button disabled={isSelect} onClick={handleClick}>
-                {isSelect ? (winningCells.includes(index) ? "🉐" : "🈚") : "❓"}
-            </button>
-        </div>
+        <IconButton
+            color="gray"
+            variant="outline"
+            disabled={isSelect}
+            size='3'
+            onClick={handleClick}
+        >
+            {isSelect ? (winningCells.includes(index) ? "🉐" : "🈚") : "❓"}
+        </IconButton>
     );
 };
 

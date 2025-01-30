@@ -1,33 +1,35 @@
+import { Card, Text, Box, Flex } from "@radix-ui/themes";
 import { useLuckyDraw } from "../context/LuckyDrawContext";
 
 const PLayerStatus = () => {
     const { currentPlayer, activePlayers } = useLuckyDraw();
-
     return (
-        <div
-            style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(6, 1fr)",
-                gap: "10px",
-                margin: "10px 0 10px 0",
-            }}
-        >
+        <Flex gap="2" my="2">
             {activePlayers.map((playerState, index) => (
-                <div
-                    key={index}
-                    style={{
-                        backgroundColor: playerState ? "lightblue" : "grey",
-                        border:
-                            currentPlayer === index + 1
-                                ? "2px solid red"
-                                : null,
-                    }}
-                >
-                    <p>Player {index + 1}</p>
-                    <p>{playerState ? null : "won"}</p>
-                </div>
+                <Card>
+                    <Box
+                        height="3rem"
+                        width="4rem"
+                        align="center"
+                        justify="center"
+                    >
+                        <Text
+                            as="div"
+                            size="2"
+                            weight={
+                                currentPlayer === index + 1 ? "bold" : "normal"
+                            }
+                            color={currentPlayer === index + 1 ? "red" : "grey"}
+                        >
+                            Player {index + 1}
+                        </Text>
+                        <Text as="div" size="2" color="gray">
+                            {playerState ? null : "winner"}
+                        </Text>
+                    </Box>
+                </Card>
             ))}
-        </div>
+        </Flex>
     );
 };
 

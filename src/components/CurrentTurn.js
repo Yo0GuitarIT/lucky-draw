@@ -1,12 +1,12 @@
+import { Text } from "@radix-ui/themes";
 import { useLuckyDraw } from "../context/LuckyDrawContext";
 
 const CurrentTurn = () => {
     const { currentPlayer } = useLuckyDraw();
 
     return (
-        <div style={{ backgroundColor: "lightseagreen" }}>
-            <p>Current Turn: Player {currentPlayer}</p>
-        </div>
+        
+            <Text>Current Turn: Player {currentPlayer}</Text>
     );
 };
 
