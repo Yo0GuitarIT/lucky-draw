@@ -2,6 +2,8 @@ import { createContext, useContext, useReducer } from "react";
 
 export const LuckyDrawContext = createContext();
 
+export const PRIZE_COUNT = 3;
+
 const initialState = {
     winners: [],
     currentPlayer: 1,
@@ -26,7 +28,7 @@ const reducer = (state, action) => {
             if (state.winningCells.includes(action.index)) {
                 newActivePlayers[state.currentPlayer - 1] = false;
                 newWinners = [...state.winners, state.currentPlayer];
-                if (newWinners.length === 3) {
+                if (newWinners.length === PRIZE_COUNT) {
                     newGamePhase = "over";
                 }
             }
@@ -73,7 +75,7 @@ const findNextPlayer = (currentPlayer, activePlayers) => {
 
 const assignPrizes = () => {
     const newPrize = [];
-    while (newPrize.length < 3) {
+    while (newPrize.length < PRIZE_COUNT) {
         const randomPosition = Math.floor(Math.random() * 36);
         if (!newPrize.includes(randomPosition)) {
             newPrize.push(randomPosition);

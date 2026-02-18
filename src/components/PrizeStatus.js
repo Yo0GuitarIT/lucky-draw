@@ -1,4 +1,5 @@
 import { useLuckyDraw } from "../context/LuckyDrawContext";
+import { PRIZE_COUNT } from "../context/LuckyDrawContext";
 
 const PrizeStatus = () => {
     const { winners } = useLuckyDraw();
@@ -7,11 +8,11 @@ const PrizeStatus = () => {
         <div
             style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
+                gridTemplateColumns: `repeat(${PRIZE_COUNT}, 1fr)`,
                 gap: "10px",
             }}
         >
-            {Array(3)
+            {Array(PRIZE_COUNT)
                 .fill()
                 .map((_, index) => (
                     <div key={index} style={{ backgroundColor: "lightpink" }}>
